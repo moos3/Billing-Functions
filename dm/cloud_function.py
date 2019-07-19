@@ -1,6 +1,20 @@
-""" Creates a Cloud Function from a local file system, a Cloud Storage bucket, 
-    or a Cloud Source Repository, and then assigns an HTTPS, Storage, or Pub/Sub 
-    trigger to that Cloud Function. 
+# Copyright 2018 Google Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+"""
+    Creates a Cloud Function from a local file system, a Cloud Storage bucket,
+    or a Cloud Source Repository, and then assigns an HTTPS, Storage, or Pub/Sub
+    trigger to that Cloud Function.
 """
 
 NO_RESOURCES_OR_OUTPUTS = [], []
@@ -42,7 +56,7 @@ def append_cloud_storage_sources(function, context):
     return resources, outputs
 
 def append_cloud_repository_sources(function, context):
-    """ Adds the source code from the cloud repository using sourceRepositoryUrl. """
+    """ Adds the source code from the cloud repository. """
 
     append_optional_property(function,
                              context.properties,
@@ -56,18 +70,6 @@ def append_cloud_repository_sources(function, context):
 
     return [], [output]
 
-def append_cloud_repository_sources_2(function, context):
-    """ Adds the source code from the cloud repository sourceRepository object """
-    append_optional_property(function, context.properties, 'sourceRepository')
-
-    name = function['name']
-    output = {
-        'name': 'sourceRepository',
-        'value': '$(ref.{}.sourceRepository.repositoryUrl)'.format(name)
-    }
-
-    return [], [output]
-
 def append_source_code(function, context):
     """ Append a reference to the Cloud Function's source code. """
 
@@ -76,8 +78,6 @@ def append_source_code(function, context):
         return append_cloud_storage_sources(function, context)
     elif 'sourceRepositoryUrl' in properties:
         return append_cloud_repository_sources(function, context)
-    elif 'sourceRepository' in properties:
-        return append_cloud_repository_sources_2(function, context)
 
     msg = """At least one of the following properties must be provided:
         - sourceRepositoryUrl
@@ -162,8 +162,9 @@ def create_function_resource(resource_name, context):
     optional_properties = ['entryPoint',
                            'timeout',
                            'runtime',
-                           'availableMemoryMb'
-                           ]
+                           'availableMemoryMb',
+                           'description',
+                           'environmentVariables']
 
     for prop in optional_properties:
         append_optional_property(function, properties, prop)

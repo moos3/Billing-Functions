@@ -1,0 +1,7 @@
+#@data/values
+---
+topic_name: billing-alerts
+dataset_name: billing
+table_name: budget
+bucket_function: test-function-training190916
+slack_webhook: 111XXX111

@@ -32,14 +32,16 @@ exports.notifySlack = async (data, context) => {
                     budgetName: budgetName,
                     threshold: threshold}]
 
+
     await bigquery.dataset(DATASET).table(TABLE).insert(rows);
+
 
     async function getBigQuery() {
       let rows;
       const options = {
         query: `SELECT count(*) cnt FROM \`${PROJECT}.${DATASET}.${TABLE}\` WHERE createdAt >  TIMESTAMP( DATE(EXTRACT(YEAR FROM CURRENT_DATE()) , EXTRACT(MONTH FROM CURRENT_DATE()), 1)) AND Threshold = ${threshold} and BudgetId = '${budgetId}'`,
         useLegacySql: false, // Use standard SQL syntax for queries.
-        location: 'EU',
+        location: DATASET_LOCATION,
       };
       // Runs the query
       let job;
@@ -108,4 +110,6 @@ exports.notifySlack = async (data, context) => {
         channel: CHANNEL,
         text: notification
     });
+
+
 };

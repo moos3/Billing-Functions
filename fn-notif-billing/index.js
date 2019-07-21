@@ -2,10 +2,10 @@ const slack = require('slack');
 const {BigQuery} = require('@google-cloud/bigquery');
 
 const CHANNEL = 'internal';
-const DATASET = 'audit'
-const TABLE = 'budget';
+const DATASET = process.env.DATASET;
+const TABLE = process.env.TABLE;
 const PROJECT = process.env.GCP_PROJECT;
-const DATASET_LOCATION = 'EU';
+const DATASET_LOCATION = process.env.DATASET_LOCATION;
 const bigquery = new BigQuery();
 const BOT_ACCESS_TOKEN = process.env.BOTTOKEN;
 

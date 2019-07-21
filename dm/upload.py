@@ -35,7 +35,7 @@ def archive_files(files):
     sources_zip.close()
     return output_file.getvalue()
 
-def upload_source(function, imports, local_path, source_archive_url):
+def upload_source(function, imports, local_path, source_archive_url, region_bucket):
     """ Uploads the Cloud Function source code from the local machine
     to a Cloud Storage bucket. If the bucket does not exist, creates it.
     """
@@ -86,7 +86,7 @@ def upload_source(function, imports, local_path, source_archive_url):
                             'name': 'gcr.io/cloud-builders/gsutil',
                             'args': [
                                 '-c',
-                                'gsutil mb {} || true'.format(bucket_name)
+                                'gsutil mb -c regional -l {} {} || true'.format(region_bucket, bucket_name)
                             ],
                             'entrypoint': '/bin/bash'
                         },

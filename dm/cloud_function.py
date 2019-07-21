@@ -34,6 +34,7 @@ def append_cloud_storage_sources(function, context):
     properties = context.properties
     upload_path = properties.get('sourceArchiveUrl')
     local_path = properties.get('localUploadPath')
+    region_bucket = properties.get('region')
 
     resources = []
     outputs = [get_source_url_output(function['name'])]
@@ -43,7 +44,7 @@ def append_cloud_storage_sources(function, context):
         from upload import generate_upload_path, upload_source
 
         upload_path = upload_path or generate_upload_path()
-        res = upload_source(function, context.imports, local_path, upload_path)
+        res = upload_source(function, context.imports, local_path, upload_path, region_bucket)
         source_resources, source_outputs = res
         resources += source_resources
         outputs += source_outputs

@@ -15,8 +15,8 @@ imports:
     name: upload.py
   - path: ../pubsub.py
     name: pubsub.py
-  - path: ../../notif-billing/index.js
-  - path: ../../notif-billing/package.json
+  - path: ../../fn-notif-billing/index.js
+  - path: ../../fn-notif-billing/package.json
 
 resources:
   - name: pubsub-billing-alerts
@@ -28,7 +28,7 @@ resources:
     type: bigquery_dataset.py
     properties:
       name: #@ data.values.dataset_name
-      location: EU
+      location: #@ data.values.dataset_location
 
   - name: budget_table
     type: bigquery_table.py
@@ -58,11 +58,16 @@ resources:
   - name: slack-notifications-billing
     type: cloud_function.py
     properties:
-      region: europe-west1
+      region: #@ data.values.region
       entryPoint: notifySlack
       runtime: nodejs8
       environmentVariables:
         BOTTOKEN: #@ data.values.slack_webhook
+        CHANNEL: #@ data.values.slack_channel
+        DATASET: #@ data.values.dataset_name
+        DATASET_LOCATION: #@ data.values.dataset_location
+        TABLE: #@ data.values.table_name
       triggerTopic: $(ref.pubsub-billing-alerts.topicName)
-      localUploadPath: ../../notif-billing/
+      localUploadPath: ../../fn-notif-billing/
       sourceArchiveUrl: #@ bucket()
+      region_bucket: #@ data.values.bucket_region

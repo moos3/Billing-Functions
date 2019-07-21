@@ -1,0 +1,29 @@
+#@ load("@ytt:data", "data")
+
+#@ def bucket():
+#@   return 'gs://' + data.values.bucket_function + '/billing-alert.zip'
+#@ end
+
+imports:
+  - path: ../cloud_function.py
+    name: cloud_function.py
+  - path: ../upload.py
+    name: upload.py
+  - path: ../../fn-current-billing/index.js
+  - path: ../../fn-current-billing/package.json
+
+resources:
+  - name: slash-current-billing
+    type: cloud_function.py
+    properties:
+      region: #@ data.values.region
+      entryPoint: diffBilling
+      runtime: nodejs8
+      environmentVariables:
+        DATASET: #@ data.values.dataset_name
+        DATASET_LOCATION: #@ data.values.dataset_location
+        TABLE: #@ data.values.table_name
+        BILLING_ID: #@ data.values.billing_id
+      localUploadPath: ../../fn-current-billing/
+      sourceArchiveUrl: #@ bucket()
+      region_bucket: #@ data.values.bucket_region

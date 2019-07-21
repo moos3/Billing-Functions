@@ -1,11 +1,11 @@
 #@data/values
 ---
 billing_id: 1111XXX1
+slack_webhook: 111XXX111
+slack_channel: internal
 topic_name: billing-alerts
 dataset_name: billing
 dataset_location: EU
 table_name: budget
-bucket_function_name: test-function-training190916
+bucket_function_name: billing-functions
 region: europe-west1
-slack_webhook: 111XXX111
-slack_channel: internal

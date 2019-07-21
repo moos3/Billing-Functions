@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 
 #@ def bucket():
-#@   return 'gs://' + data.values.bucket_function + '/billing-alert.zip'
+#@   return 'gs://' + data.values.bucket_function_name + '/billing-alert.zip'
 #@ end
 
 imports:

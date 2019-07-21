@@ -32,6 +32,7 @@ def append_cloud_storage_sources(function, context):
     """ Adds source code from the Cloud Storage. """
 
     properties = context.properties
+    project = context.env["project"]
     upload_path = properties.get('sourceArchiveUrl')
     local_path = properties.get('localUploadPath')
     region_bucket = properties.get('region')
@@ -44,7 +45,7 @@ def append_cloud_storage_sources(function, context):
         from upload import generate_upload_path, upload_source
 
         upload_path = upload_path or generate_upload_path()
-        res = upload_source(function, context.imports, local_path, upload_path, region_bucket)
+        res = upload_source(function, context.imports, local_path, upload_path, region_bucket, project)
         source_resources, source_outputs = res
         resources += source_resources
         outputs += source_outputs

@@ -82,7 +82,7 @@ called through a slack slash command. To deploy the function, run the following 
     - Save it
     
 
-You have now configured your slack as cost monitoring system for your GCP. You will now get automatic billing alerts
+You have now configured your slack as a cost monitoring system for your GCP. You will now get automatic billing alerts
 and give your users the possibility to interact with the billing through two slash commands. Many more slash commands
 can be deployed and the workflow will remain the same as per steps 9 and 10.
     

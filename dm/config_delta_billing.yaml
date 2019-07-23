@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 
 #@ def bucket():
-#@   return 'gs://' + data.values.bucket_function_name + '/billing-delta.zip'
+#@   return 'gs://' + data.values.bucket_function_name + '-' +  data.values.project_id + '/slash-delta-billing.zip'
 #@ end
 
 imports:
@@ -9,11 +9,11 @@ imports:
     name: cloud_function.py
   - path: ../upload.py
     name: upload.py
-  - path: ../../fn-current-billing/index.js
-  - path: ../../fn-current-billing/package.json
+  - path: ../../fn-delta-billing/index.js
+  - path: ../../fn-delta-billing/package.json
 
 resources:
-  - name: slash-current-billing
+  - name: slash-delta-billing
     type: cloud_function.py
     properties:
       region: #@ data.values.region
@@ -24,6 +24,6 @@ resources:
         DATASET_LOCATION: #@ data.values.dataset_location
         TABLE: #@ data.values.table_name
         BILLING_ID: #@ data.values.billing_id
-      localUploadPath: ../../fn-current-billing/
+      localUploadPath: ../../fn-delta-billing/
       sourceArchiveUrl: #@ bucket()
-      region_bucket: #@ data.values.bucket_region
+      region_bucket: #@ data.values.region

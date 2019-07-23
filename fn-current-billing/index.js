@@ -18,12 +18,10 @@ exports.getCurrentBilling = async (req, res) => {
   const budgetAmount = result[0].budget;
   const rate = costAmount/budgetAmount*100;
 
-  const emoticon = rate >= 90 ? ':scream: :fire: :scream:' : '';
-
   // Create the Slack message structure
   const message = {
     response_type: "ephemeral",
-    text: `${emoticon} \nYour billing account has exceeded ${rate}% of the monthly budget of ${budgetAmount}.\nThe billing account has accrued ${':moneybag:'} ${costAmount}€ ${':moneybag:'} in costs so far for the month.`,
+    text: `${emoticon} \nYour billing account has exceeded ${rate}% of the monthly budget of ${budgetAmount}.\nThe billing account has accrued ${':moneybag:'} ${costAmount} EUR ${':moneybag:'} in costs so far for the month.`,
     attachments: [],
   };
 

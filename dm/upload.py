@@ -35,7 +35,7 @@ def archive_files(files):
     sources_zip.close()
     return output_file.getvalue()
 
-def upload_source(function, imports, local_path, source_archive_url, region_bucket, project):
+def upload_source(function, imports, local_path, source_archive_url, region_bucket):
     """ Uploads the Cloud Function source code from the local machine
     to a Cloud Storage bucket. If the bucket does not exist, creates it.
     """
@@ -50,7 +50,6 @@ def upload_source(function, imports, local_path, source_archive_url, region_buck
 
     # Splits the upload path into the bucket and archive names.
     bucket_name = source_archive_url[:source_archive_url.index('/', GS_SCHEMA_LENGTH)] # pylint: disable=line-too-long
-    bucket_name = bucket_name + project
     archive_name = source_archive_url[source_archive_url.rfind('/') + 1:]
 
     # Uses a Docker volume to pass the archive between the build steps.

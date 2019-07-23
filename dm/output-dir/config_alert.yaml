@@ -1,0 +1,63 @@
+imports:
+- path: ../bigquery_dataset.py
+  name: bigquery_dataset.py
+- path: ../bigquery_table.py
+  name: bigquery_table.py
+- path: ../cloud_function.py
+  name: cloud_function.py
+- path: ../upload.py
+  name: upload.py
+- path: ../pubsub.py
+  name: pubsub.py
+- path: ../../fn-notif-billing/index.js
+- path: ../../fn-notif-billing/package.json
+resources:
+- name: pubsub-billing-alerts
+  type: pubsub.py
+  properties:
+    topic: billing-alerts
+- name: billing_dataset
+  type: bigquery_dataset.py
+  properties:
+    name: billing
+    location: EU
+- name: budget_table
+  type: bigquery_table.py
+  properties:
+    name: budget
+    datasetId: $(ref.billing_dataset.datasetId)
+    schema:
+    - name: createdAt
+      type: TIMESTAMP
+      mode: REQUIRED
+    - name: costAmount
+      type: NUMERIC
+      mode: REQUIRED
+    - name: budgetAmount
+      type: NUMERIC
+      mode: REQUIRED
+    - name: budgetName
+      type: STRING
+      mode: REQUIRED
+    - name: threshold
+      type: NUMERIC
+      mode: REQUIRED
+    - name: budgetId
+      type: STRING
+      mode: REQUIRED
+- name: slack-notifications-billing
+  type: cloud_function.py
+  properties:
+    region: europe-west1
+    entryPoint: notifySlack
+    runtime: nodejs8
+    environmentVariables:
+      BOTTOKEN: https://hooks.slack.com/services/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
+      CHANNEL: internal
+      DATASET: billing
+      DATASET_LOCATION: EU
+      TABLE: budget
+    triggerTopic: $(ref.pubsub-billing-alerts.topicName)
+    localUploadPath: ../../fn-notif-billing/
+    sourceArchiveUrl: gs://billing-functions-training-190916/billing-alert.zip
+    region_bucket: europe-west1

@@ -14,8 +14,9 @@ It also contains "Infrastructure as Code" in order to deploy these fucntions wit
 4. Install ytt library (https://k14s.io/). This is a templating library that will inject your values into the 
 different configuration files.
 
-5. Replace the values in the "values.yaml" file. Only the first three values are mandatory to be replaced.
-    - billing_id: Need to be replaced with the billing id of your project
+5. Replace the values in the "values.yaml" file. Only the first four values are mandatory to be replaced.
+    - project_id: Need to be replaced by your project ID
+    - billing_id: Need to be replaced with the billing ID of your project
     - slack_webhook: Need to be replaced by the incoming webhook of your slack app
     - slack_channel: channel to which you want your billing alerts to be sent
     - topic_name: pub/sub topic namme. Optional to change.

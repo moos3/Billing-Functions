@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 
 #@ def bucket():
-#@   return 'gs://' + data.values.bucket_function_name + '/billing-alert.zip'
+#@   return 'gs://' + data.values.bucket_function_name + '-' +  data.values.project_id + '/billing-alert.zip'
 #@ end
 
 imports:
@@ -70,4 +70,4 @@ resources:
       triggerTopic: $(ref.pubsub-billing-alerts.topicName)
       localUploadPath: ../../fn-notif-billing/
       sourceArchiveUrl: #@ bucket()
-      region_bucket: #@ data.values.bucket_region
+      region_bucket: #@ data.values.region

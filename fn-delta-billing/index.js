@@ -55,7 +55,7 @@ exports.diffBilling = async (req, res) => {
     // Run the post request with the final message inside
     axios.post(req.body.response_url, {
       response_type: 'ephemeral',
-      text: `The ${date2} billing increase is ${relativeDiff}% ${evolution[0]} than the ${date1} one ${evolution[2]}, that is to say ${absoluteDiff}€. ${evolution[3]}`,
+      text: `The ${date2} billing increase is ${relativeDiff}% ${evolution[0]} than the ${date1} one ${evolution[2]}, that is to say ${absoluteDiff} EUR. ${evolution[3]}`,
       attachments: {},
     }, {
       headers: {

@@ -1,8 +1,9 @@
 #@data/values
 ---
-billing_id: 1111XXX1
-slack_webhook: 111XXX111
-slack_channel: internal
+project_id: [REPLACE ME]
+billing_id: [REPLACE ME]
+slack_webhook: [REPLACE ME]
+slack_channel: [REPLACE ME]
 topic_name: billing-alerts
 dataset_name: billing
 dataset_location: EU

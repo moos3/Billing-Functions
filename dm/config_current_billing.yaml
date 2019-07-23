@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 
 #@ def bucket():
-#@   return 'gs://' + data.values.bucket_function_name + '/billing-current.zip'
+#@   return 'gs://' + data.values.bucket_function_name + '-' +  data.values.project_id + '/slash-current-billing.zip'
 #@ end
 
 imports:
@@ -26,4 +26,4 @@ resources:
         BILLING_ID: #@ data.values.billing_id
       localUploadPath: ../../fn-current-billing/
       sourceArchiveUrl: #@ bucket()
-      region_bucket: #@ data.values.bucket_region
+      region_bucket: #@ data.values.region

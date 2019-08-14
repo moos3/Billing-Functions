@@ -2,7 +2,7 @@
 ---
 project_id: [REPLACE ME]
 billing_id: [REPLACE ME]
-slack_webhook: [REPLACE ME]
+bottoken: [REPLACE ME]
 slack_channel: [REPLACE ME]
 topic_name: billing-alerts
 dataset_name: billing

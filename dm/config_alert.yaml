@@ -62,7 +62,7 @@ resources:
       entryPoint: notifySlack
       runtime: nodejs8
       environmentVariables:
-        BOTTOKEN: #@ data.values.slack_webhook
+        BOTTOKEN: #@ data.values.bottoken
         CHANNEL: #@ data.values.slack_channel
         DATASET: #@ data.values.dataset_name
         DATASET_LOCATION: #@ data.values.dataset_location

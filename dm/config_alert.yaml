@@ -71,3 +71,4 @@ resources:
       localUploadPath: ../../fn-notif-billing/
       sourceArchiveUrl: #@ bucket()
       region_bucket: #@ data.values.region
+      

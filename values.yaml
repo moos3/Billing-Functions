@@ -1,9 +1,9 @@
 #@data/values
 ---
-project_id: [REPLACE ME]
-billing_id: [REPLACE ME]
-bottoken: [REPLACE ME]
-slack_channel: [REPLACE ME]
+project_id: wedding-website-a1062
+billing_id: 01F273-00EB1C-3F349A
+bottoken: xoxp-839242178231-836923367620-839600119462-cf926e961e915382df27d58305bd533a
+slack_channel: wedding
 topic_name: billing-alerts
 dataset_name: billing
 dataset_location: EU
